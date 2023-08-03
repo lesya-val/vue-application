@@ -1,29 +1,33 @@
 <template>
 	<form class="form" @submit.prevent>
-		<h4>Создание поста</h4>
-		<input
+		<h3>Создание поста</h3>
+		<MyInput
 			v-model="post.title"
 			class="input" 
 			type="text" 
 			placeholder="Название"
-		>
-		<input 
+		/>
+		<MyInput 
 			v-model="post.body"
 			class="input" 
 			type="text" 
 			placeholder="Описание"
-		>
-		<button 
-			class="btn"
+		/>
+		<MyButton
+			class="form__btn"
 			@click="createPost">
+			
 			Создать
-		</button>
+		</MyButton>
 	</form>
 </template>
 
 <script>
+
 export default {
 	name: 'PostForm',
+	components: {
+	},
 	data() {
 		return {
 			post: {
@@ -52,17 +56,7 @@ export default {
 		gap: 10px;
 	}
 
-	.input {
-		width: 100%;
-		padding: 10px;
-		border: 1px solid teal;
-	}
-
-	.btn {
-		padding: 10px;
-		border: 1px solid teal;
-		background: transparent;
-		color: teal;
+	.form__btn {
 		align-self: flex-end;
 	}
 </style>
