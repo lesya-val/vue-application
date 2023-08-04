@@ -1,6 +1,17 @@
 <template>
 	<div class="app">
-		<PostForm @create="createPost"/>
+    <h1>Список постов</h1>
+    <MyButton
+      @click="showDialog"
+      class="app__btn"
+    >
+      Создать пост
+    </MyButton>
+    <MyDialog v-model:show="dialogVisible">
+      <PostForm
+        @create="createPost"
+      />
+    </MyDialog>
 		<PostList 
 			:posts="posts"
 			@remove="removePost"
@@ -12,10 +23,14 @@
 
 import PostForm from '@/components/PostForm.vue'
 import PostList from '@/components/PostList.vue'
+import MyDialog from "@/components/UI/MyDialog.vue";
+import MyButton from "@/components/UI/MyButton.vue";
 
 export default {
   name: 'App',
 	components: {
+    MyButton,
+    MyDialog,
 		PostForm,
 		PostList,
 	},
@@ -26,15 +41,20 @@ export default {
 				{id: 2, title: 'Python', body: 'Описание поста 2'},
 				{id: 3, title: 'C++', body: 'Описание поста 3'},
 			],
+      dialogVisible: false,
 		}
 	},
 	methods: {
 		createPost(post) {
 			this.posts.push(post);
+      this.dialogVisible = false;
 		},
 		removePost(post) {
 			this.posts = this.posts.filter(p => p.id !== post.id)
-		}
+		},
+    showDialog() {
+      this.dialogVisible = true
+    }
 	}
 }
 </script>
@@ -49,4 +69,8 @@ export default {
 	.app {
 		padding: 20px;
 	}
+
+  .app__btn {
+    margin: 15px 0px;
+  }
 </style>

@@ -1,6 +1,5 @@
 <template>
 	<div v-if="posts.length > 0">
-		<h2>Список постов</h2>
 		<PostItem 
 			v-for="post in posts" 
 			:key="post.id" 
