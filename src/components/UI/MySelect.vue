@@ -1,5 +1,5 @@
 <template>
-  <select :value="modelValue" @change="changeOptions">
+  <select class="select" :value="modelValue" @change="changeOptions">
     <option disabled value="">Выберете из списка</option>
     <option
       v-for="option in options"
@@ -32,5 +32,8 @@ export default {
 </script>
 
 <style>
-
+  .select {
+    height: 100%;
+    padding: 10px;
+  }
 </style>

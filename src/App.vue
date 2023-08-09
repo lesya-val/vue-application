@@ -1,10 +1,12 @@
 <template>
 	<div class="app">
-    <h1>Список постов</h1>
+    <h1 class="app__title">Список постов</h1>
+    <my-input
+      v-model="searchQuery"
+    />
     <div class="app__edit">
       <MyButton
         @click="showDialog"
-        class="app__btn"
       >
         Создать пост
       </MyButton>
@@ -19,7 +21,7 @@
       />
     </MyDialog>
 		<PostList 
-			:posts="sortedPosts"
+			:posts="sortedAndSearchedPosts"
 			@remove="removePost"
       v-if="!isPostsLoading"
 		/>
@@ -35,10 +37,12 @@ import MyDialog from "@/components/UI/MyDialog.vue";
 import MyButton from "@/components/UI/MyButton.vue";
 import axios from "axios";
 import MySelect from "@/components/UI/MySelect.vue";
+import MyInput from "@/components/UI/MyInput.vue";
 
 export default {
   name: 'App',
 	components: {
+    MyInput,
     MySelect,
     MyButton,
     MyDialog,
@@ -51,10 +55,11 @@ export default {
       dialogVisible: false,
       isPostsLoading: false,
       selectedSort: '',
+      searchQuery: '',
       sortOptions: [
         {value: 'title', name: 'По названию'},
         {value: 'body', name: 'По описанию'},
-      ]
+      ],
 		}
 	},
 	methods: {
@@ -88,6 +93,9 @@ export default {
     sortedPosts() {
       return [...this.posts].sort((post1, post2) =>
           post1[this.selectedSort]?.localeCompare(post2[this.selectedSort]))
+    },
+    sortedAndSearchedPosts() {
+      return this.sortedPosts.filter(post => post.title.toLowerCase().includes(this.searchQuery))
     }
   },
 }
@@ -104,13 +112,13 @@ export default {
 		padding: 20px;
 	}
 
+  .app__title {
+    margin-bottom: 10px;
+  }
+
   .app__edit {
     display: flex;
     justify-content: space-between;
-  }
-
-  .app__btn {
     margin: 15px 0;
-
   }
 </style>
